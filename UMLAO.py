@@ -11,21 +11,25 @@ import pandas as pd
 warnings.filterwarnings('ignore', category=ConvergenceWarning)
 
 
-def main():
-    dataset = pd.read_csv("Data/sonar.csv")
-    pred = []
-    for i in range(60):
-        pred.append(i)
+def main(dataset, pred):
     optimal_logistic = find_optimal_logistic(dataset, 60, pred)
-    print(optimal_logistic)
+    best_accuracy = optimal_logistic[0]
+    best_params = optimal_logistic
+
+    # print(optimal_logistic)
 
 # Continuous Models
+
+# --------------------------Linear Regression--------------------------------
+
 def run_linear_regression(data: pd.DataFrame, target_column: int, predictor_columns: list):
     print(data.iloc[:,target_column])
+    
+# ---------------------End of Linear Regression------------------------------
 
 # Discrete Models
 
-# Logistic Regression
+# --------------------------Logistic Regression--------------------------------
 def find_optimal_logistic(dataset, target, predictors):
     best_accuracy = 0
     best_params = []
@@ -81,8 +85,9 @@ def run_logistic_regression(data: pd.DataFrame, target_column: int, predictor_co
     model = LogisticRegression(C=c, max_iter=optimal_c)
     return [accuracy, optimal_c, optimal_s, optimal_p]
 
+    # ---------------------End of Logistic Regression------------------------------
 
-
-
-
-main()
+pred = []
+for i in range(60):
+    pred.append(i)
+main(pd.read_csv("Data/sonar.csv"), pred)
